@@ -1,0 +1,35 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+		<!-- JQuery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="static/js/sha1.js"></script>
+		<script src="static/js/flask_hashcash.js"></script>
+		<script>
+		function make_ajax_request(){
+			$.get('/api',function(resp){
+				$('#ajax_resp').fadeIn().html(resp);
+				setTimeout(function(){$('#ajax_resp').fadeOut()},1000);
+				$('#status').html('Puzzle is '+readCookie('hashcash_puzzle'));
+			});
+		}
+		function onSolutionFound(){
+			// for demo purposes
+			var puzzle = readCookie('hashcash_puzzle');
+			var solution = readCookie('hashcash_solution');
+			$('#status').html('Puzzle is '+puzzle+'. Found solution '+solution+'! <small>(cached and ready to use)</small>');
+		}
+
+		findHashcashSolution({callback:onSolutionFound}); // find hashcash solution on page load
+		$(document).ajaxSuccess(function(event, xhr, settings){
+		    findHashcashSolution({callback:onSolutionFound}); // find hashcash solution after each ajax call
+		});
+		</script>
+	</head>
+	<body style="background-color: #000;">
+		<center class="big_text">If you're seeing this flask_hashcash is working!</center>
+		<center id="status" class="smaller_text"></center>
+		<button class="mt40" onclick="make_ajax_request()">Make ajax request</button>
+		<span id="ajax_resp"></span>
+	</body>
+</html>
