@@ -2,7 +2,7 @@
 Force user to send Hashcash proof-of-work with each request.
 
 All magic happens in cookies. 
-Don't worry about including PoW in each request. Multiple tabs opened is not a problem.
+Don't worry about including PoW by hand. Multiple tabs opened is not a problem.
 
 It's very easy to use:
 ```python
